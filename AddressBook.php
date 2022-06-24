@@ -12,9 +12,10 @@ class AddressBookSystem
 
     function welcome()
     {
-        echo "Welcome to AddressBook system\n";
+        echo "\nWelcome to AddressBook system\n";
     }
-    
+
+
     function addContact()
     {
         $this->firstName  = readline("Enter your first name : ");
@@ -27,44 +28,81 @@ class AddressBookSystem
         $this->email      = readline("Enter your email : ");
 
         $this->person = new ContactDetails($this->firstName, $this->lastName, $this->address, $this->city, $this->state, $this->zip, $this->phoneNumber, $this->email);
-        array_push($this->contactArray, $this->person);
+        //array_push($this->contactArray, $this->person);
+
+        //pushing the elements to the array
         $this->contactArray[] = $this->person;
 
         $this->displayContactDetails();
+    }
+
+    public function editContact()
+    {
+        $editName = readline("Enter the first name of person to edit contact : ");
+        $edit = false;
+        for ($i = 0; $i < count($this->contactArray); $i++) {
+            $name = $this->contactArray[$i];
+            echo $name->getFirstName();
+            if ($editName == $name->getFirstName()) {
+                $firstName = readline("Edit First Name : ");
+                $lastName = readline("Edit Last Name : ");
+                $address = readline("Edit Address : ");
+                $city = readline("Edit City : ");
+                $state = readline("Edit State : ");
+                $zip = readline("Edit ZipCode : ");
+                $phoneNumber = readline("Edit Phone Number : ");
+                $email = readline("Edit EmailId : ");
+
+                $name->setFirstName($firstName);
+                $name->setLastName($lastName);
+                $name->setAddress($address);
+                $name->setCity($city);
+                $name->setState($state);
+                $name->setZip($zip);
+                $name->setPhoneNumber($phoneNumber);
+                $name->setEmail($email);
+
+                $this->contactArray[$i] = $name;
+                $this->displayContactDetails();
+
+                $edit = true;
+                break;
+            }
+        }
+        if (!$edit) {
+            echo "The Name You Entered does not exist";
+        }
     }
 
     function displayContactDetails()
     {
         for ($i = 0; $i < count($this->contactArray); $i++) {
 
-            echo "\nContactDetails :
-                 \nName : " . $this->person->getFirstName() . " " . $this->person->getLastName() . "\n"
-                . "Address : " . $this->person->getAddress() . "\n"
-                . "City : " . $this->person->getCity() . "\n"
-                . "State : " . $this->person->getState() . "\n"
-                . "ZipCode : " . $this->person->getZip() . "\n"
-                . "Phone Number : " . $this->person->getPhoneNumber() . "\n"
-                . "Email Id : " . $this->person->getEmail() . "\n";
+            echo $this->contactArray[$i];
         }
     }
 }
 
 
-
+//Creating Object for AddressBook Class
 $addressBook = new AddressBookSystem();
 $addressBook->welcome();
+
+//Loop will run Infinite times till we choose exit.
 while (true) {
-    $options = readline("\nEnter 1 to Add New Contact\nEnter 2 to Exit\n");
+    $options = readline("\nEnter 1 to Add New Contact \nEnter 2 to Edit Contact\nEnter 3 to Exit ");
     switch ($options) {
         case 1:
             $addressBook->addContact();
             break;
         case 2:
-            echo "Exit From AddressBook";
-            exit;
-
+            $addressBook->editContact();
             break;
         case 3:
+            echo "Exit From AddressBook";
+            exit;
+            break;
+        default:
             echo "Please Choose Option";
     }
 }
