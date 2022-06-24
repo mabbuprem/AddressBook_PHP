@@ -12,7 +12,7 @@ class AddressBookSystem
 
     function welcome()
     {
-        echo "\nWelcome to AddressBook system\n";
+        echo "\n----Welcome to AddressBook system------\n";
     }
 
 
@@ -70,7 +70,20 @@ class AddressBookSystem
             }
         }
         if (!$edit) {
-            echo "The Name You Entered does not exist";
+            echo "\nThe Name You Entered does not exist\n";
+        }
+    }
+
+    public function deleteContact()
+    {
+        $deleteName = readline("Enter the first name of person to delete contact : ");
+
+        for ($i = 0; $i < count($this->contactArray); $i++) {
+            $name = $this->contactArray[$i];
+            if ($deleteName == $name->getFirstName()) {
+                unset($this->contactArray[$i]);
+                $this->displayContactDetails();
+            }
         }
     }
 
@@ -78,7 +91,9 @@ class AddressBookSystem
     {
         for ($i = 0; $i < count($this->contactArray); $i++) {
 
-            echo $this->contactArray[$i];
+            foreach ($this->contactArray as $contact) {
+                echo $contact;
+            }
         }
     }
 }
@@ -90,7 +105,7 @@ $addressBook->welcome();
 
 //Loop will run Infinite times till we choose exit.
 while (true) {
-    $options = readline("\nEnter 1 to Add New Contact \nEnter 2 to Edit Contact\nEnter 3 to Exit ");
+    $options = readline("\nEnter 1 to Add New Contact \nEnter 2 to Edit Contact\nEnter 3 to Delete Contact\nEnter 4 to exit ");
     switch ($options) {
         case 1:
             $addressBook->addContact();
@@ -99,6 +114,9 @@ while (true) {
             $addressBook->editContact();
             break;
         case 3:
+            $addressBook->deleteContact();
+            break;
+        case 4:
             echo "Exit From AddressBook";
             exit;
             break;
