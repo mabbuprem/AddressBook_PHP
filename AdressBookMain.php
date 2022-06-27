@@ -12,7 +12,8 @@ while (true) {
         . "5. To Delete the contact in AddressBook\n"
         . "6. To Display the AddressBook\n"
         . "7. Search person from a city\n"
-        . "8. Search person from a State\n9. To Exit\n";
+        . "8. Search person from a State\n"
+        . "9. Count of contacts by City or State\n0. To exit\n";;
 
     $option = readline("Choose your option : ");
     switch ($option) {
@@ -43,6 +44,10 @@ while (true) {
             $multipleAddressBook->searchPersonByState($stateName);
             break;
         case 9:
+            $name = readline("Enter state name : ");
+            echo "Number of contacts in " . $name . " is " . $multipleAddressBook->contactsCount($name) . "\n";
+            break;
+        case 0:
             echo "---Exit From AddressBook---";
             exit;
             break;
