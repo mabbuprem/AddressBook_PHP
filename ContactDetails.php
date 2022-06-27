@@ -112,7 +112,7 @@ class ContactDetails
 
     public function __toString()
     {
-        return "ContactDetails : \nName : " . $this->firstName . " " . $this->lastName . "\n"
+        return "---ContactDetails--- :  \nName : " . $this->firstName . " " . $this->lastName . "\n"
             . "Address : " . $this->address . "\n"
             . "City : " . $this->city . "\n"
             . "State : " . $this->state . "\n"
