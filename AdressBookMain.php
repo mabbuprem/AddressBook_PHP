@@ -9,7 +9,9 @@ while (true) {
     echo "----- MENU-----\n1. To add The new AddressBook\n2. To Add contact in AddressBook\n"
         . "3. To Edit the contact in AddressBook\n4. To Delete the AddressBook\n"
         . "5. To Delete the contact in AddressBook\n"
-        . "6. To Display the AddressBook\n7. To Exit\n";
+        . "6. To Display the AddressBook\n"
+        . "7. Search person from a city\n"
+        . "8. Search person from a State\n9. To Exit\n";
 
     $option = readline("Choose your option : ");
     switch ($option) {
@@ -32,7 +34,15 @@ while (true) {
             $multipleAddressBook->displayContact();
             break;
         case 7:
-            echo "Exit From AddressBook";
+            $cityName = readline("Enter city name : ");
+            $multipleAddressBook->searchPersonByCity($cityName);
+            break;
+        case 8:
+            $stateName = readline("Enter state name : ");
+            $multipleAddressBook->searchPersonByState($stateName);
+            break;
+        case 9:
+            echo "---Exit From AddressBook---";
             exit;
             break;
         default:
