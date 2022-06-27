@@ -1,12 +1,14 @@
 <?php
 
+
 include "ContactDetails.php";
 
 class AddressBook
 {
 
-    public $contactArray = [];
+    //public $contactArray = [];
     public $person;
+
 
     function welcome()
     {
@@ -27,102 +29,75 @@ class AddressBook
         $this->person = new ContactDetails($this->firstName, $this->lastName, $this->address, $this->city, $this->state, $this->zip, $this->phoneNumber, $this->email);
         //array_push($this->contactArray, $this->person);
 
-        //pushing the elements to the array
-        $this->contactArray[] = $this->person;
-
-        $this->displayContactDetails();
+        //pushing the elements to  array
+        //$this->contactArray[] = $this->person;
+        // $this->displayContactDetails();
+        return $this->person;
     }
 
     /**Edit contact details by set method */
     public function editContact()
     {
-        $editName = readline("Enter the first name of person to edit contact : ");
-        $edit = false;
-        for ($i = 0; $i < count($this->contactArray); $i++) {
-            $name = $this->contactArray[$i];
-            echo $name->getFirstName();
-            if ($editName == $name->getFirstName()) {
+        echo "1->To Edit FirstName\n 2->To Edit LastName\n 3->To Edit Address\n 4->To Edit City\n 5->To Edit State\n 6->To Edit Zip\n 7->To Edit Phone Number\n 8->To Edit Email\n";
+        $option = readline("Choose which Information You want to Edit : \n");
+
+        switch ($option) {
+            case 1:
                 $firstName = readline("Edit First Name : ");
-                $lastName = readline("Edit Last Name : ");
-                $address = readline("Edit Address : ");
-                $city = readline("Edit City : ");
-                $state = readline("Edit State : ");
-                $zip = readline("Edit ZipCode : ");
-                $phoneNumber = readline("Edit Phone Number : ");
-                $email = readline("Edit EmailId : ");
-
-                $name->setFirstName($firstName);
-                $name->setLastName($lastName);
-                $name->setAddress($address);
-                $name->setCity($city);
-                $name->setState($state);
-                $name->setZip($zip);
-                $name->setPhoneNumber($phoneNumber);
-                $name->setEmail($email);
-
-                $this->contactArray[$i] = $name;
-                $this->displayContactDetails();
-
-                $edit = true;
+                $this->person->setFirstName($firstName);
                 break;
-            }
+            case 2:
+                $lastName = readline("Edit Last Name : ");
+                $this->person->setLastName($lastName);
+                break;
+            case 3:
+                $address = readline("Edit Address : ");
+                $this->person->setAddress($address);
+                break;
+            case 4:
+                $city = readline("Edit City : ");
+                $this->person->setCity($city);
+                break;
+            case 5:
+                $state = readline("Edit State : ");
+                $this->person->setState($state);
+                break;
+            case 6:
+                $zip = readline("Edit ZipCode : ");
+                $this->person->setZip($zip);
+                break;
+            case 7:
+                $phoneNumber = readline("Edit Phone Number : ");
+                $this->person->setPhoneNumber($phoneNumber);
+                break;
+            case 8:
+                $email = readline("Edit EmailId : ");
+                $this->person->setEmail($email);
+                break;
+            default:
+                echo "Choose Any one of the Option !! ";
         }
-        if (!$edit) {
-            echo "\nThe Name You Entered does not exist\n";
-        }
+
+
+        return $this->person;
     }
+
+
 
     /**Delete contact by first name 
      * Used Unset function to remove the element from an array
      */
-    public function deleteContact()
+    public function deleteContact($book)
     {
         $deleteName = readline("Enter the first name of person to delete contact : ");
-
-        for ($i = 0; $i < count($this->contactArray); $i++) {
-            $name = $this->contactArray[$i];
-            if ($deleteName == $name->getFirstName()) {
-                unset($this->contactArray[$i]);
-                $this->displayContactDetails();
+        foreach ($book as $key => $values) {
+            for ($i = 0; $i < count($values); $i++) {
+                $name = $values[$i];
+                if ($deleteName == $name->getFirstName()) {
+                    unset($values[$i]);
+                }
             }
         }
-    }
-    /** Displaying the Contacts of AddressBook */
-
-    function displayContactDetails()
-    {
-        for ($i = 0; $i < count($this->contactArray); $i++) {
-
-            foreach ($this->contactArray as $contact) {
-                echo $contact;
-            }
-        }
-    }
-}
-
-
-//Creating Object for AddressBook Class
-$addressBook = new AddressBook();
-$addressBook->welcome();
-
-//Loop will run Infinite times till we choose exit.
-while (true) {
-    $options = readline("\nEnter 1 to Add New Contact \nEnter 2 to Edit Contact\nEnter 3 to Delete Contact\nEnter 4 to exit ");
-    switch ($options) {
-        case 1:
-            $addressBook->addContact();
-            break;
-        case 2:
-            $addressBook->editContact();
-            break;
-        case 3:
-            $addressBook->deleteContact();
-            break;
-        case 4:
-            echo "Exit From AddressBook";
-            exit;
-            break;
-        default:
-            echo "Please Choose Option";
+        return $book;
     }
 }
