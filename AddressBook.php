@@ -1,20 +1,17 @@
 <?php
 
-
 include "ContactDetails.php";
 
-class AddressBookSystem
+class AddressBook
 {
 
     public $contactArray = [];
     public $person;
 
-
     function welcome()
     {
         echo "\n----Welcome to AddressBook system------\n";
     }
-
 
     function addContact()
     {
@@ -36,6 +33,7 @@ class AddressBookSystem
         $this->displayContactDetails();
     }
 
+    /**Edit contact details by set method */
     public function editContact()
     {
         $editName = readline("Enter the first name of person to edit contact : ");
@@ -74,6 +72,9 @@ class AddressBookSystem
         }
     }
 
+    /**Delete contact by first name 
+     * Used Unset function to remove the element from an array
+     */
     public function deleteContact()
     {
         $deleteName = readline("Enter the first name of person to delete contact : ");
@@ -86,6 +87,7 @@ class AddressBookSystem
             }
         }
     }
+    /** Displaying the Contacts of AddressBook */
 
     function displayContactDetails()
     {
@@ -100,7 +102,7 @@ class AddressBookSystem
 
 
 //Creating Object for AddressBook Class
-$addressBook = new AddressBookSystem();
+$addressBook = new AddressBook();
 $addressBook->welcome();
 
 //Loop will run Infinite times till we choose exit.
