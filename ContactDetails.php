@@ -23,7 +23,7 @@ class ContactDetails
         $this->phoneNumber = $phoneNumber;
         $this->email = $email;
     }
-/**Initialising Getters and setters */
+    /**Initialising Getters and setters */
 
     public function getFirstName()
     {
@@ -109,7 +109,7 @@ class ContactDetails
 
 
     /**Tostring menthod */
-    
+
     public function __toString()
     {
         return "ContactDetails : \nName : " . $this->firstName . " " . $this->lastName . "\n"

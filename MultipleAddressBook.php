@@ -39,10 +39,29 @@ class MultipleAddressBook
         if (array_key_exists($newBookContact, $this->contactArray)) {
 
             for ($i = 0; $i < $size; $i++) {
-                $this->contactArray[$newBookContact][$i] = $this->addressBook->addContact();
+                $firstName = readline("Enter First Name : ");
+                foreach ($this->contactArray as $key => $values) {
+                    if ($key == $newBookContact) {
+                        if ($values == NULL) {
+                            $this->contactArray[$newBookContact][$i] = $this->addressBook->addContact($firstName);
+                            break;
+                        }
+                        for ($j = 0; $j < $size; $j++)
+                            //if(in_array($firstName, $values)) {
+                            if ($firstName == $values[$j]->getFirstName()) {
+                                echo "The entered person is already exist.\n";
+                                $i--;
+                                break;
+                            } else {
+                                $this->contactArray[$newBookContact][$i] = $this->addressBook->addContact($firstName);
+                                echo "Contact added successfully. \n";
+                                break;
+                            }
+                    }
+                }
             }
         } else {
-            echo "No Address Book Exist!!";
+            echo "No Address book Exist\n";
         }
     }
 
