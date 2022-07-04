@@ -147,7 +147,6 @@ class MultipleAddressBook
             }
         }
     }
-    
 
     public function searchPersonByState($stateName)
     {
@@ -157,23 +156,38 @@ class MultipleAddressBook
                     echo "Address Book : " . $key . "\n";
                     echo "First Name : " . $values[$i]->getFirstName() . "\n";
                     echo "Last Name : " . $values[$i]->getLastName() . "\n";
-                    echo "Address :" . $values[$i]->getAddress() . "\n";
-                    echo "City :" . $values[$i]->getCity() . "\n";
-                    echo "State : " . $values[$i]->getState() . "\n";
-                    echo "zip :" . $values[$i]->getzip() ."\n";
-                    echo "Phone Number :" . $values[$i]->getPhoneNumber() ."\n";
-                    echo "email :" . $values[$i]->getemail() . "\n";
                     echo "\n";
                 }
             }
         }
     }
 
-    public function contactsCount($name) {
+    public function searchPerson()
+    {
+        echo "1. for search by city \n2 . for search by state\n";
+        $option = readline();
+        switch ($option) {
+            case 1:
+                $cityName = readline("Enter city name : ");
+                $this->searchPersonByCity($cityName);
+                break;
+            case 2:
+                $stateName = readline("Enter state name : ");
+                $this->searchPersonByState($stateName);
+                break;
+            default:
+                echo "Invalid Input :\n";
+                continue;
+        }
+    }
+
+
+    public function contactsCount($name)
+    {
         $count = 0;
-        foreach($this->contactArray as $key => $values) {
-            for($i = 0; $i < count($values); $i++) {
-                if($name == $values[$i]->getState() || $name == $values[$i]->getCity()) {
+        foreach ($this->contactArray as $key => $values) {
+            for ($i = 0; $i < count($values); $i++) {
+                if ($name == $values[$i]->getState() || $name == $values[$i]->getCity()) {
                     $count++;
                 }
             }
@@ -183,12 +197,23 @@ class MultipleAddressBook
 
     public function sorting()
     {
-        echo "1. View By first name\n";
+        echo "1. View By first name \n2. View By city \n3. View By state \n4. View by Zip code \n5. Back\n";
         $sort = readline();
         switch ($sort) {
             case 1:
                 $this->sortByName();
                 break;
+            case 2:
+                $this->sortByCity();
+                break;
+            case 3:
+                $this->sortByState();
+                break;
+            case 4:
+                $this->sortByZipCode();
+                break;
+            case 5:
+                return;
             default:
                 echo "Invalid choice \n";
         }
@@ -203,6 +228,78 @@ class MultipleAddressBook
                 for ($i = 0; $i < $num - 1; $i++) {
                     for ($j = $i + 1; $j <= $num - 1; $j++) {
                         if ($values[$i]->getFirstName() > $values[$j]->getFirstName()) {
+                            $tmp = $values[$i];
+                            $values[$i] = $values[$j];
+                            $values[$j] = $tmp;
+                        }
+                    }
+                }
+                foreach ($values as $contact) {
+                    echo $contact;
+                }
+            }
+        }
+    }
+
+    public function sortByCity()
+    {
+        $addressBook = readline("Enter Name of Address Book : ");
+        foreach ($this->contactArray as $key => $values) {
+            if ($key == $addressBook) {
+                $num = count($values);
+                for ($i = 0; $i < $num - 1; $i++) {
+                    for ($j = $i + 1; $j <= $num - 1; $j++) {
+                        if ($values[$i]->getCity() > $values[$j]->getCity()) {
+                            $tmp = $values[$i];
+                            $values[$i] = $values[$j];
+                            $values[$j] = $tmp;
+                        }
+                    }
+                }
+                foreach ($values as $contact) {
+                    echo $contact;
+                }
+            }
+        }
+    }
+
+    /**
+     * sortByName method is used to sort the address book contact by state
+     */
+    public function sortByState()
+    {
+        $addressBook = readline("Enter Name of Address Book : ");
+        foreach ($this->contactArray as $key => $values) {
+            if ($key == $addressBook) {
+                $num = count($values);
+                for ($i = 0; $i < $num - 1; $i++) {
+                    for ($j = $i + 1; $j <= $num - 1; $j++) {
+                        if ($values[$i]->getState() > $values[$j]->getState()) {
+                            $tmp = $values[$i];
+                            $values[$i] = $values[$j];
+                            $values[$j] = $tmp;
+                        }
+                    }
+                }
+                foreach ($values as $contact) {
+                    echo $contact;
+                }
+            }
+        }
+    }
+
+    /**
+     * sortByName method is used to sort the address book contact by zip code
+     */
+    public function sortByZipCode()
+    {
+        $addressBook = readline("Enter Name of Address Book : ");
+        foreach ($this->contactArray as $key => $values) {
+            if ($key == $addressBook) {
+                $num = count($values);
+                for ($i = 0; $i < $num - 1; $i++) {
+                    for ($j = $i + 1; $j <= $num - 1; $j++) {
+                        if ($values[$i]->getZip() > $values[$j]->getZip()) {
                             $tmp = $values[$i];
                             $values[$i] = $values[$j];
                             $values[$j] = $tmp;
