@@ -7,7 +7,7 @@ $multipleAddressBook = new MultipleAddressBook();
 
 while (true) {
 
-    echo "----- MENU-----\n1. To add The new AddressBook\n2. To Add contact in AddressBook\n"
+    echo "MENU\n1. To add The new AddressBook\n2. To Add contact in AddressBook\n"
         . "3. To Edit the contact in AddressBook\n4. To Delete the AddressBook\n"
         . "5. To Delete the contact in AddressBook\n"
         . "6. To Display the AddressBook\n"
@@ -39,19 +39,18 @@ while (true) {
             $cityName = readline("Enter city name : ");
             $multipleAddressBook->searchPersonByCity($cityName);
             break;
-        case 8:
-            $stateName = readline("Enter state name : ");
-            $multipleAddressBook->searchPersonByState($stateName);
-            break;
-        case 9:
-            $name = readline("Enter state name : ");
-            echo "Number of contacts in " . $name . " is " . $multipleAddressBook->contactsCount($name) . "\n";
-            break;
-        case 0:
-            echo "---Exit From AddressBook---";
-            exit;
-            break;
-        default:
-            echo "Please choose your Option !!\n";
+            case 8:
+                $name = readline("Enter state name : ");
+                echo "Number of contact persons in " . $name . " is " . $multipleAddressBook->contactsCount($name) . "\n";
+                break;
+            case 9:
+                $multipleAddressBook->sorting();
+                break;
+            case 0:
+                echo "---Exit From AddressBook---";
+                exit;
+                break;
+            default:
+                echo "Please choose your Option !!\n";
+        }
     }
-}

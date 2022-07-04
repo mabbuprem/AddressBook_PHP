@@ -147,6 +147,7 @@ class MultipleAddressBook
             }
         }
     }
+    
 
     public function searchPersonByState($stateName)
     {
@@ -156,6 +157,12 @@ class MultipleAddressBook
                     echo "Address Book : " . $key . "\n";
                     echo "First Name : " . $values[$i]->getFirstName() . "\n";
                     echo "Last Name : " . $values[$i]->getLastName() . "\n";
+                    echo "Address :" . $values[$i]->getAddress() . "\n";
+                    echo "City :" . $values[$i]->getCity() . "\n";
+                    echo "State : " . $values[$i]->getState() . "\n";
+                    echo "zip :" . $values[$i]->getzip() ."\n";
+                    echo "Phone Number :" . $values[$i]->getPhoneNumber() ."\n";
+                    echo "email :" . $values[$i]->getemail() . "\n";
                     echo "\n";
                 }
             }
@@ -172,5 +179,40 @@ class MultipleAddressBook
             }
         }
         return $count;
+    }
+
+    public function sorting()
+    {
+        echo "1. View By first name\n";
+        $sort = readline();
+        switch ($sort) {
+            case 1:
+                $this->sortByName();
+                break;
+            default:
+                echo "Invalid choice \n";
+        }
+    }
+
+    public function sortByName()
+    {
+        $addressBook = readline("Enter Name of Address Book : ");
+        foreach ($this->contactArray as $key => $values) {
+            if ($key == $addressBook) {
+                $num = count($values);
+                for ($i = 0; $i < $num - 1; $i++) {
+                    for ($j = $i + 1; $j <= $num - 1; $j++) {
+                        if ($values[$i]->getFirstName() > $values[$j]->getFirstName()) {
+                            $tmp = $values[$i];
+                            $values[$i] = $values[$j];
+                            $values[$j] = $tmp;
+                        }
+                    }
+                }
+                foreach ($values as $contact) {
+                    echo $contact;
+                }
+            }
+        }
     }
 }
